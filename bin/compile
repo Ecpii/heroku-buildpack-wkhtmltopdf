@@ -30,6 +30,7 @@ fi
 WKHTMLTOPDF_PATH_EXTRACT=$CACHE_DIR/wkhtmltox
 DESTINATION=$BUILD_DIR/bin
 PACKAGE_NAME=$CACHE_DIR/$(basename $WKHTMLTOPDF_URL) 
+PROFILE_PATH="$BUILD_DIR/.profile.d/wkhtml.sh"
 
 # Move files to /bin
 if [ ! -f "$DESTINATION/wkhtmltoimage" ]; then
@@ -60,6 +61,6 @@ if [ ! -f "$DESTINATION/wkhtmltoimage" ]; then
         rm -rf "$WKHTMLTOPDF_PATH_EXTRACT"
 
         prints 'wkhtmltopdf is successfully downloaded and extracted to /app/bin'
-	echo "export PATH=$PATH:/app/bin" > .profile.d/add_app_bin_to_path.sh
+	echo "export PATH=$PATH:/app/bin" > $PROFILE_PATH
     fi
 fi

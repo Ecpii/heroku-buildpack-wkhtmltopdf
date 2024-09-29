@@ -49,10 +49,10 @@ if [ ! -f "$DESTINATION/wkhtmltoimage" ]; then
 
         if [[ $(basename $WKHTMLTOPDF_URL) == *deb ]]; then
             dpkg -x "$PACKAGE_NAME" "$WKHTMLTOPDF_PATH_EXTRACT"
-            cp $WKHTMLTOPDF_PATH_EXTRACT/usr/local/bin/* /bin
+            cp $WKHTMLTOPDF_PATH_EXTRACT/usr/local/bin/* "$DESTINATION"
         else
             tar --xz --extract --file "$PACKAGE_NAME" --directory "$CACHE_DIR"
-            cp $WKHTMLTOPDF_PATH_EXTRACT/bin/* /bin
+            cp $WKHTMLTOPDF_PATH_EXTRACT/bin/* "$DESTINATION"
         fi
 
         prints 'Deleting temporary data'
@@ -60,5 +60,6 @@ if [ ! -f "$DESTINATION/wkhtmltoimage" ]; then
         rm -rf "$WKHTMLTOPDF_PATH_EXTRACT"
 
         prints 'wkhtmltopdf is successfully downloaded and extracted to /app/bin'
+	echo "export PATH=$PATH:/app/bin" > .profile.d/add_app_bin_to_path.sh
     fi
 fi

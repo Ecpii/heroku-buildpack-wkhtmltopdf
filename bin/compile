@@ -31,7 +31,7 @@ WKHTMLTOPDF_PATH_EXTRACT=$CACHE_DIR/wkhtmltox
 DESTINATION=$BUILD_DIR/bin
 PACKAGE_NAME=$CACHE_DIR/$(basename $WKHTMLTOPDF_URL) 
 
-# Move files to /app/bin
+# Move files to /bin
 if [ ! -f "$DESTINATION/wkhtmltoimage" ]; then
 
 	if [ ! -d "$DESTINATION" ]; then
@@ -49,10 +49,10 @@ if [ ! -f "$DESTINATION/wkhtmltoimage" ]; then
 
         if [[ $(basename $WKHTMLTOPDF_URL) == *deb ]]; then
             dpkg -x "$PACKAGE_NAME" "$WKHTMLTOPDF_PATH_EXTRACT"
-            cp $WKHTMLTOPDF_PATH_EXTRACT/usr/local/bin/* $DESTINATION
+            cp $WKHTMLTOPDF_PATH_EXTRACT/usr/local/bin/* /bin
         else
             tar --xz --extract --file "$PACKAGE_NAME" --directory "$CACHE_DIR"
-            cp $WKHTMLTOPDF_PATH_EXTRACT/bin/* $DESTINATION
+            cp $WKHTMLTOPDF_PATH_EXTRACT/bin/* /bin
         fi
 
         prints 'Deleting temporary data'
@@ -60,7 +60,5 @@ if [ ! -f "$DESTINATION/wkhtmltoimage" ]; then
         rm -rf "$WKHTMLTOPDF_PATH_EXTRACT"
 
         prints 'wkhtmltopdf is successfully downloaded and extracted to /app/bin'
-        export PATH=$PATH:/app/bin
-	prints 'updated PATH! with value' "$PATH"
     fi
 fi
